@@ -95,9 +95,10 @@ class User
         } else
             {
                 $sql = "UPDATE user SET 
-                          username=$this->username,
-                          email=$this->email,
-                          hashed_password=$this->hashedPassword";
+                            username='$this->username',
+                            email='$this->email',
+                            hashed_password='$this->hashedPassword'
+                        WHERE id=$this->id";
                 $result = $connection->query($sql);
 
                 if($result == true)
@@ -114,7 +115,7 @@ class User
     static public function getUserById(Connection $connection, $id)
     {
         $sql = "SELECT * FROM user WHERE id=$id";
-        $result = $connection->query($id);
+        $result = $connection->query($sql);
 
         if($result == true && $result->num_rows == 1)
         {
@@ -129,14 +130,13 @@ class User
             return $loadedUser;
         }
         return null;
-
     }
 
     static public function getAllUsers(Connection $connection)
     {
         $array = [];
         $sql = "SELECT * FROM user";
-        $result = $connection->query();
+        $result = $connection->query($sql);
 
         if($result == true && $result->num_rows != 0)
         {
@@ -156,17 +156,29 @@ class User
         return null;
     }
 
+    public function delete(Connection $connection, $id)
+    {
+        $sql = "DELETE FROM user WHERE id=$id";
+        $result = $connection->query($sql);
+
+        if($result == true)
+        {
+            $this->id = -1;
+            return true;
+        } else
+            {
+                return false;
+            }
+        return true;
+    }
+
 }
 $connection = new Connection();
-$user = new User();
-$user2 = new User();
 
-$user->setUsername('Arek');
-$user->setEmail('arek@mail.com');
+$user = new User();
+$user->setUsername('Edek');
+$user->setEmail('edward@ward.org');
 $user->setHashedPassword('asd');
 $user->saveToDB($connection);
 
-$user2->setUsername('Joanna');
-$user2->setEmail('joanna@mail.com');
-$user2->setHashedPassword('asd');
-$user2->saveToDB($connection);
+//var_dump(User::getAllUsers($connection));
