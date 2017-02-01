@@ -6,6 +6,7 @@
  * Date: 31.01.17
  * Time: 21:09
  */
+include 'library.php';
 class User
 {
     private $id;
@@ -82,18 +83,18 @@ class User
     {
         if($this->id == -1)
         {
-            $sql = "INSERT INTO User (username, email, hashed_password) 
+            $sql = "INSERT INTO user (username, email, hashed_password) 
                       VALUES ('$this->username', '$this->email', '$this->hashedPassword')";
             $result = $connection->query($sql);
 
             if($result == true)
             {
-                $this->id = $connection->insert_id();
+                $this->id = $connection->insert_id;
                 return true;
             }
         } else
             {
-                $sql = "UPDATE User SET 
+                $sql = "UPDATE user SET 
                           username=$this->username,
                           email=$this->email,
                           hashed_password=$this->hashedPassword";
@@ -110,9 +111,9 @@ class User
 
     }
 
-    public function getUserById(Connection $connection, $id)
+    static public function getUserById(Connection $connection, $id)
     {
-        $sql = "SELECT * FROM User WHERE id=$id";
+        $sql = "SELECT * FROM user WHERE id=$id";
         $result = $connection->query($id);
 
         if($result == true && $result->num_rows == 1)
@@ -127,8 +128,45 @@ class User
 
             return $loadedUser;
         }
-        return false;
+        return null;
 
     }
 
+    static public function getAllUsers(Connection $connection)
+    {
+        $array = [];
+        $sql = "SELECT * FROM user";
+        $result = $connection->query();
+
+        if($result == true && $result->num_rows != 0)
+        {
+            foreach($result as $row)
+            {
+                $loadedUser = new User();
+
+                $loadedUser->id = $row['id'];
+                $loadedUser->username = $row['username'];
+                $loadedUser->email = $row['email'];
+                $loadedUser->hashedPassword = $row['hashed_password'];
+
+                $array[] = $loadedUser;
+            }
+            return $array;
+        }
+        return null;
+    }
+
 }
+$connection = new Connection();
+$user = new User();
+$user2 = new User();
+
+$user->setUsername('Arek');
+$user->setEmail('arek@mail.com');
+$user->setHashedPassword('asd');
+$user->saveToDB($connection);
+
+$user2->setUsername('Joanna');
+$user2->setEmail('joanna@mail.com');
+$user2->setHashedPassword('asd');
+$user2->saveToDB($connection);
