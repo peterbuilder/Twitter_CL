@@ -173,12 +173,3 @@ class User
     }
 
 }
-$connection = new Connection();
-
-$user = new User();
-$user->setUsername('Edek');
-$user->setEmail('edward@ward.org');
-$user->setHashedPassword('asd');
-$user->saveToDB($connection);
-
-//var_dump(User::getAllUsers($connection));
