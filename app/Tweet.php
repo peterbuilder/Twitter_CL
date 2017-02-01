@@ -11,7 +11,7 @@ class Tweet
     private $id;
     private $userId;
     private $text;
-    private $creationData;
+    private $creationDate;
 
     /**
      * Tweet constructor.
@@ -21,7 +21,7 @@ class Tweet
         $this->id = -1;
         $this->userId = -1;
         $this->text = '';
-        $this->creationData = '';
+        $this->creationDate = '';
     }
 
     /**
@@ -73,20 +73,59 @@ class Tweet
     /**
      * @return string
      */
-    public function getCreationData(): string
+    public function getCreationDate(): string
     {
-        return $this->creationData;
+        return $this->creationDate;
     }
 
     /**
-     * @param string $creationData
+     * @param string $creationDate
      */
-    public function setCreationData(string $creationData)
+    public function setCreationDate(string $creationDate)
     {
-        $this->creationData = $creationData;
+        $this->creationDate = $creationDate;
     }
 
+    static public function loadTweetById(Connection $connection, $id)
+    {
+        $sql = "SELECT * FROM tweet WHERE id=$id";
+        $result = $connection->query($sql);
 
+        if($result == true && $result->num_rows == 1)
+        {
+            $row = $result->fetch_assoc();
 
+            $loadedTweet = new Tweet();
+            $loadedTweet->id = $row['id'];
+            $loadedTweet->userId = $row['userId'];
+            $loadedTweet->text = $row['text'];
+            $loadedTweet->creationDate = $row['creationDate'];
+
+            return $loadedTweet;
+        }
+        return null;
+    }
+
+    static public function loadAllTweetsByUserId(Connection $connection, $userId)
+    {
+        $sql = "SELECT * FROM tweet WHERE userId=$userId";
+        $result = $connection->query($sql);
+
+        if($result == true && $result->num_rows != 0)
+        {
+            $array = [];
+            foreach($result as $row)
+            {
+                $loadedTweet = new Tweet();
+                $loadedTweet->id = $row['id'];
+                $loadedTweet->userId = $row['userId'];
+                $loadedTweet->text = $row['text'];
+                $loadedTweet->creationDate = $row['creationDate'];
+
+                $array[] = $loadedTweet;
+            }
+            return $array;
+        }
+    }
 
 }
