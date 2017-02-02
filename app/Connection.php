@@ -9,6 +9,7 @@
 class Connection
 {
     private $mysqli;
+    public $insert_id;
 
     public function __construct()
     {
