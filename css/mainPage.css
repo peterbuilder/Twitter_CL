@@ -4,11 +4,32 @@ p {
     font-size: 40px;
 }
 
-.tweetClass {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-style: dotted;
+.tweetClass:after {
+    margin-bottom: 40px;
+    width: 400px;
+    content: '';
+    display: block;
+    clear: both;
 
+}
+
+.tweetClass .tweetText {
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.tweetClass .tweetUsername {
+    height: 15px;
+    width: 75%;
+    text-align: right;
+    float: left;
+}
+
+.tweetClass .tweetDate {
+    height: 15px;
+    width: 25%;
+    text-align: right;
+    float: left;
 }
 
 #mainTweets {
