@@ -12,6 +12,8 @@ class Tweet
     private $userId;
     private $text;
     private $creationDate;
+    private $username;
+
 
     /**
      * Tweet constructor.
@@ -86,6 +88,16 @@ class Tweet
         $this->creationDate = $creationDate;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+
+
     static public function loadTweetById(Connection $connection, $id)
     {
         $sql = "SELECT * FROM tweet WHERE id=$id";
@@ -121,6 +133,7 @@ class Tweet
                 $loadedTweet->userId = $row['userId'];
                 $loadedTweet->text = $row['text'];
                 $loadedTweet->creationDate = $row['creationDate'];
+                $loadedTweet->username = $row['username'];
 
                 $array[] = $loadedTweet;
             }
@@ -128,4 +141,102 @@ class Tweet
         }
     }
 
+    static public function loadAllTweets(Connection $connection)
+    {
+        $sql = "SELECT * FROM tweet JOIN user ON user.id = tweet.userId";
+        $result = $connection->query($sql);
+
+        if($result == true && $result->num_rows != 0)
+        {
+            $array = [];
+
+            foreach($result as $row)
+            {
+                $loadedTweet = new Tweet();
+                $loadedTweet->id = $row['id'];
+                $loadedTweet->userId = $row['userId'];
+                $loadedTweet->text = $row['text'];
+                $loadedTweet->creationDate = $row['creationDate'];
+                $loadedTweet->username = $row['username'];
+
+                $array[] = $loadedTweet;
+            }
+            return $array;
+        }
+        return null;
+    }
+
+    public function saveToDB(Connection $connection)
+    {
+        if($this->id == -1)
+        {
+            $sql = "INSERT INTO tweet (userId, text, creationDate) 
+                    VALUES ('$this->userId', '$this->text', '$this->creationDate')";
+            $result = $connection->query($sql);
+
+            if($result == true)
+            {
+                $this->id = $connection->insert_id;
+                return true;
+            }
+        } else
+            {
+                $sql = "UPDATE tweet SET
+                          userId='$this->userId',
+                          text='$this->text',
+                          creationDate='$this->creationDate'
+                          WHERE id=$this->id";
+                $result = $connection->query($sql);
+
+                if($result == true)
+                {
+                    return true;
+                } else
+                    {
+                        return false;
+                    }
+            }
+    }
+
+    public function delete(Connection $connection)
+    {
+        if($this->id != -1)
+        {
+            $sql = "DELETE FROM tweet WHERE id=$this->id";
+            $result = $connection->query($sql);
+
+            if($result == true)
+            {
+                $this->id = -1;
+                return true;
+            } else
+                {
+                    return false;
+                }
+        } else
+            {
+                return true;
+            }
+
+    }
+
+    static public function showTweet($text, $username, $date)
+    {
+        echo '<div class="tweetClass">';
+            echo '<div class="tweetText">';
+                echo $text;
+            echo '</div>';
+            echo '<div class="tweetUsername">';
+                echo $username;
+            echo '</div>';
+            echo '<div class="tweetDate">';
+                echo $date;
+            echo '</div>';
+        echo '</div>';
+
+    }
+
 }
+
+
+
