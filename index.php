@@ -20,8 +20,15 @@ $tweets = Tweet::loadAllTweets($connection);
     <title>Twitter - STRONA GŁÓWNA</title>
 </head>
 <body>
-<p>Strona Główna</p>
+<div id="login">
+    <form>
+        <input type="text" name="username" placeholder="Nazwa użytkownika">
+        <input type="text" name="password" placeholder="Hasło">
+        <input type="submit" value="Zaloguj">
+    </form>
+</div>
 <div id="mainTweets">
+    <h1>Strona Główna</h1>
     <?php
         foreach($tweets as $tweet)
         {
