@@ -24,12 +24,14 @@ switch(true)
                                                 echo '<form>';
                                                 echo '<button type="submit" formaction="index.php">Powrót</button>';
                                                 echo '<form>';
+                                                header('Refresh: 2; url=index.php');
                                             } else
                                                 {
                                                     echo 'Błąd logowania';
                                                     echo '<form>';
                                                     echo '<button type="submit" formaction="index.php">Powrót</button>';
                                                     echo '<form>';
+                                                    header('Refresh: 2; url=index.php');
                                                 }
                                             break;
 
@@ -38,6 +40,7 @@ switch(true)
                                             echo '<form>';
                                             echo '<button type="submit" formaction="index.php">Powrót</button>';
                                             echo '<form>';
+                                            header('Refresh: 2; url=index.php');
                                             break;
 }
 

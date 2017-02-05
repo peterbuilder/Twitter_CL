@@ -249,6 +249,33 @@ class Tweet
         }
     }
 
+    static public function addTweet(Connection $connection)
+    {
+        if(isset($_POST['tweetText']))
+        {
+            $text = $_POST['tweetText'];
+            $username = $_SESSION['logged'];
+            $date = date("Y-m-d");
+            $sql = "SELECT id FROM user WHERE username='$username'";
+            $result = $connection->query($sql);
+
+            if($result)
+            {
+                $result = $result->fetch_assoc();
+                $userId = $result['id'];
+                $sql = "INSERT INTO tweet (userId, text, creationDate) VALUES ('$userId', '$text', '$date')";
+                $result = $connection->query($sql);
+
+                if($result)
+                    {
+                        unset($_POST['tweetText']);
+                        return true;
+                    } else false;
+            }
+
+        }
+    }
+
 }
 
 

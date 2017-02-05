@@ -4,6 +4,10 @@
     font-size: 40px;
 }
 
+#addTweet {
+    width: 100%;
+}
+
 .tweetClass:after {
     margin-bottom: 40px;
     width: 400px;

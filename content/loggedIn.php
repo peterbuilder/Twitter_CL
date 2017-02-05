@@ -23,7 +23,14 @@
     <?php
         $connection = new Connection();
         Tweet::showAllTweets($connection);
+        Tweet::addTweet($connection);
+
     ?>
+    <form action="#" method="post">
+        <input type="text" id="addTweet" maxlength="140"
+            placeholder="Treść Tweeta" name="tweetText">
+        <input type="submit" value="Wyślij">
+    <form>
 </div>
 </body>
 </html>
