@@ -220,7 +220,7 @@ class Tweet
 
     }
 
-    static public function showTweet($text, $username, $date)
+    static public function tweetToHTML($text, $username, $date)
     {
         echo '<div class="tweetClass">';
             echo '<div class="tweetText">';
@@ -234,6 +234,19 @@ class Tweet
             echo '</div>';
         echo '</div>';
 
+    }
+
+    static public function showAllTweets(Connection $connection)
+    {
+        $tweets = Tweet::loadAllTweets($connection);
+
+        foreach($tweets as $tweet)
+        {
+            $text = $tweet->getText();
+            $username= $tweet->getUsername();
+            $date = $tweet->getCreationDate();
+            Tweet::tweetToHTML($text, $username, $date);
+        }
     }
 
 }
