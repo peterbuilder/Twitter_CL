@@ -27,5 +27,10 @@ class Authorization
                 return false;
             }
     }
+
+    static public function logeOut()
+    {
+        unset($_SESSION['logged']);
+    }
 }
 

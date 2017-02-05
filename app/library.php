@@ -7,3 +7,6 @@
  */
 
 include 'Connection.php';
+include 'User.php';
+include 'Tweet.php';
+

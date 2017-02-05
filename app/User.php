@@ -6,7 +6,7 @@
  * Date: 31.01.17
  * Time: 21:09
  */
-include 'Connection.php';
+
 class User
 {
     private $id;
@@ -178,9 +178,4 @@ class User
     }
 
 }
-$connection = new Connection();
-$user = new User();
-$user->setUsername('testowy6');
-$user->setEmail('test6@test.pl');
-$user->setHashedPassword('asd');
-$user->saveToDB($connection);
+

@@ -6,6 +6,7 @@
  * Date: 31.01.17
  * Time: 15:05
  */
+
 class Connection
 {
     private $mysqli;
