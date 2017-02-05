@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="login">
-    <form action="userPage.php" method="post">
+    <form action="login.php" method="post">
         <input type="text" name="username" placeholder="Nazwa użytkownika">
         <input type="password" name="password" placeholder="Hasło">
         <input type="submit" value="Zaloguj">
