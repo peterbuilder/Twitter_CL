@@ -15,7 +15,7 @@
 <body>
 <div id="login">
     <form action="userPage.php" method="post">
-        <button type="submit" formaction="userPage.php" formmethod="get" name="logeout">Wyloguj</button>
+        <button type="submit" formaction="login.php" formmethod="get" name="logeout">Wyloguj</button>
     </form>
 </div>
 <div id="mainTweets">
