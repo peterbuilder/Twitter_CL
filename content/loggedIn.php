@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="login">
-    <form action="userPage.php" method="post">
+    <form action="login.php" method="post">
         <button type="submit" formaction="login.php" formmethod="get" name="logeout">Wyloguj</button>
     </form>
 </div>
