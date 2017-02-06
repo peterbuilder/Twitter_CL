@@ -16,7 +16,8 @@
     <h1>Strona Główna</h1>
     <?php
         $connection = new Connection();
-        Tweet::showAllTweets($connection);
+        $tweets = Tweet::loadAllTweets($connection);
+        Tweet::showAllTweets($connection, $tweets);
     ?>
 </div>
 </body>
