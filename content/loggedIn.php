@@ -22,11 +22,14 @@
     <h1>Strona Główna</h1>
     <?php
         $connection = new Connection();
-        Tweet::showAllTweets($connection);
-        Tweet::addTweet($connection);
+        $tweets = Tweet::loadAllTweets($connection);
+        Tweet::showAllTweets($connection, $tweets);
+//        Tweet::addTweet($connection, $_POST['tweetText']);
+        //wywołać addTweet() na innej podstronie i potem wrócić do tej (header...)
+        unset($_POST['tweetText']);
 
     ?>
-    <form action="#" method="post">
+    <form action="app/addTweet.php" method="post">
         <input type="text" id="addTweet" maxlength="140"
             placeholder="Treść Tweeta" name="tweetText">
         <input type="submit" value="Wyślij">
