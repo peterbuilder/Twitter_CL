@@ -96,8 +96,6 @@ class Tweet
         return $this->username;
     }
 
-
-
     static public function loadTweetById(Connection $connection, $id)
     {
         $sql = "SELECT * FROM tweet WHERE id=$id";
@@ -120,7 +118,8 @@ class Tweet
 
     static public function loadAllTweetsByUserId(Connection $connection, $userId)
     {
-        $sql = "SELECT * FROM tweet WHERE userId=$userId";
+        $sql = "SELECT tweet.id, tweet.userId, tweet.text, tweet.creationDate, user.username 
+                  FROM tweet JOIN user ON user.id = tweet.userId AND user.id=$userId";
         $result = $connection->query($sql);
 
         if($result == true && $result->num_rows != 0)
@@ -236,10 +235,8 @@ class Tweet
 
     }
 
-    static public function showAllTweets(Connection $connection)
+    static public function showAllTweets(Connection $connection, array $tweets)
     {
-        $tweets = Tweet::loadAllTweets($connection);
-
         foreach($tweets as $tweet)
         {
             $text = $tweet->getText();
@@ -249,28 +246,34 @@ class Tweet
         }
     }
 
-    static public function addTweet(Connection $connection)
+    static public function showAllTweetsByUserId(Connection $connection, $userId)
     {
-        if(isset($_POST['tweetText']))
+        $tweets = Tweet::loadAllTweetsByUserId($connection, $userId);
+        Tweet::showAllTweets($connection, $tweets);
+    }
+
+    static public function getUserIdByUserName(Connection $connection)
+    {
+        $username = $_SESSION['logged'];
+        $sql = "SELECT id FROM user WHERE username='$username'";
+        $result = $connection->query($sql);
+        $result = $result->fetch_assoc();
+        $userId = $result['id'];
+
+        return $userId;
+    }
+    static public function addTweet(Connection $connection, $tweetText)
+    {
+        if(isset($tweetText))
         {
-            $text = $_POST['tweetText'];
-            $username = $_SESSION['logged'];
             $date = date("Y-m-d");
-            $sql = "SELECT id FROM user WHERE username='$username'";
-            $result = $connection->query($sql);
+            $userId = Tweet::getUserIdByUserName($connection);
 
-            if($result)
+            if($userId && $tweetText != '')
             {
-                $result = $result->fetch_assoc();
-                $userId = $result['id'];
-                $sql = "INSERT INTO tweet (userId, text, creationDate) VALUES ('$userId', '$text', '$date')";
+                $sql = "INSERT INTO tweet (userId, text, creationDate) VALUES ('$userId', '$tweetText', '$date')";
                 $result = $connection->query($sql);
-
-                if($result)
-                    {
-                        unset($_POST['tweetText']);
-                        return true;
-                    } else false;
+                unset($tweetText);
             }
 
         }
