@@ -35,6 +35,37 @@
     float: left;
 }
 
+.commentClass {
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    content: '';
+    display: block;
+    clear: both;
+    font-size: 14px;
+    width: 85%;
+
+}
+
+.commentText {
+    margin-bottom: 6px;
+    font-style: italic;
+}
+
+.commentUsername {
+    height: 15px;
+    width: 75%;
+    text-align: right;
+    float: left;
+}
+
+.commentDate {
+    height: 15px;
+    width: 25%;
+    text-align: right;
+    float: left;
+}
+
 #login {
     text-align: right;
     float: right;
