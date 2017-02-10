@@ -88,9 +88,6 @@ class Tweet
         $this->creationDate = $creationDate;
     }
 
-    /**
-     * @return mixed
-     */
     public function getUsername()
     {
         return $this->username;
@@ -119,7 +116,10 @@ class Tweet
     static public function loadAllTweetsByUserId(Connection $connection, $userId)
     {
         $sql = "SELECT tweet.id, tweet.userId, tweet.text, tweet.creationDate, user.username 
-                  FROM tweet JOIN user ON user.id = tweet.userId AND user.id=$userId";
+                FROM tweet 
+                JOIN user 
+                ON user.id = tweet.userId 
+                AND user.id=$userId";
         $result = $connection->query($sql);
 
         if($result == true && $result->num_rows != 0)
@@ -142,7 +142,12 @@ class Tweet
 
     static public function loadAllTweets(Connection $connection)
     {
-        $sql = "SELECT * FROM tweet JOIN user ON user.id = tweet.userId";
+        $sql = "SELECT t.id, t.userId, t.text, t.creationDate, u.username 
+                FROM tweet 
+                as t 
+                JOIN user 
+                as u 
+                ON u.id = t.userId";
         $result = $connection->query($sql);
 
         if($result == true && $result->num_rows != 0)
@@ -242,7 +247,10 @@ class Tweet
             $text = $tweet->getText();
             $username= $tweet->getUsername();
             $date = $tweet->getCreationDate();
+            $postId = $tweet->getId();
             Tweet::tweetToHTML($text, $username, $date);
+            $comments = Comment::loadAllCommentsByPostId($connection, $postId);
+            Comment::showAllComments($connection, $comments);
         }
     }
 
@@ -262,6 +270,7 @@ class Tweet
 
         return $userId;
     }
+
     static public function addTweet(Connection $connection, $tweetText)
     {
         if(isset($tweetText))
