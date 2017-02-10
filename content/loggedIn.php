@@ -24,8 +24,6 @@
         $connection = new Connection();
         $tweets = Tweet::loadAllTweets($connection);
         Tweet::showAllTweets($connection, $tweets);
-//        Tweet::addTweet($connection, $_POST['tweetText']);
-        //wywołać addTweet() na innej podstronie i potem wrócić do tej (header...)
         unset($_POST['tweetText']);
 
     ?>
