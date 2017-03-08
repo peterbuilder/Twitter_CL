@@ -6,9 +6,11 @@
  * Date: 31.01.17
  * Time: 15:05
  */
+
 class Connection
 {
     private $mysqli;
+    public $insert_id;
 
     public function __construct()
     {

@@ -1,0 +1,81 @@
+#mainTweets h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 40px;
+}
+
+#addTweet {
+    width: 100%;
+}
+
+.tweetClass:after {
+    margin-bottom: 40px;
+    width: 400px;
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.tweetClass .tweetText {
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.tweetClass .tweetUsername {
+    height: 15px;
+    width: 75%;
+    text-align: right;
+    float: left;
+}
+
+.tweetClass .tweetDate {
+    height: 15px;
+    width: 25%;
+    text-align: right;
+    float: left;
+}
+
+.commentClass {
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    content: '';
+    display: block;
+    clear: both;
+    font-size: 14px;
+    width: 85%;
+
+}
+
+.commentText {
+    margin-bottom: 6px;
+    font-style: italic;
+}
+
+.commentUsername {
+    height: 15px;
+    width: 75%;
+    text-align: right;
+    float: left;
+}
+
+.commentDate {
+    height: 15px;
+    width: 25%;
+    text-align: right;
+    float: left;
+}
+
+#login {
+    text-align: right;
+    float: right;
+    width: 300px;
+    margin-right: 50px;
+
+}
+
+#mainTweets {
+    width: 400px;
+    height: auto;
+    margin: auto;
+}

@@ -6,7 +6,7 @@
  * Date: 31.01.17
  * Time: 21:09
  */
-include 'library.php';
+
 class User
 {
     private $id;
@@ -98,7 +98,7 @@ class User
                             username='$this->username',
                             email='$this->email',
                             hashed_password='$this->hashedPassword'
-                        WHERE id=$this->id";
+                          WHERE id=$this->id";
                 $result = $connection->query($sql);
 
                 if($result == true)
@@ -158,27 +158,24 @@ class User
 
     public function delete(Connection $connection, $id)
     {
-        $sql = "DELETE FROM user WHERE id=$id";
-        $result = $connection->query($sql);
-
-        if($result == true)
+        if($this->id != -1)
         {
-            $this->id = -1;
-            return true;
-        } else
+            $sql = "DELETE FROM user WHERE id=$id";
+            $result = $connection->query($sql);
+
+            if($result == true)
+            {
+                $this->id = -1;
+                return true;
+            } else
             {
                 return false;
             }
-        return true;
+        } else
+            {
+                return true;
+            }
     }
 
 }
-$connection = new Connection();
 
-$user = new User();
-$user->setUsername('Edek');
-$user->setEmail('edward@ward.org');
-$user->setHashedPassword('asd');
-$user->saveToDB($connection);
-
-//var_dump(User::getAllUsers($connection));
